@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include <windows.h>
 #include <shellapi.h>
-#include <strsafe.h>
+#include <string.h>
 #include <tchar.h>
+
+//Replacement for strsafe.h in MinGW
+#define StringCchCopy(dest, n, src) strncpy ((char*)dest, (char const*)src, n)
 
 #define WM_MYMESSAGE (WM_USER + 1)
 #define TRAYHOST_ICON_ID 100

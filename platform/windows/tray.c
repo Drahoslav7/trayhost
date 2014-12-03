@@ -4,12 +4,10 @@
 #include <string.h>
 #include <tchar.h>
 
-//Replacement for strsafe.h in MinGW
-#define StringCchCopy(dest, n, src) strncpy ((char*)dest, (char const*)src, n)
-
 #define WM_MYMESSAGE (WM_USER + 1)
 #define TRAYHOST_ICON_ID 100
 #define MAX_LOADSTRING 255
+
 
 HWND hWnd;
 HMENU hSubMenu;
@@ -33,9 +31,8 @@ void reset_menu()
 
 void set_menu_item(int id, const char* go_title, int disabled)
 {
-
     LPTSTR title = (LPTSTR)calloc(MAX_LOADSTRING, sizeof(TCHAR));
-    StringCchCopy(title, MAX_LOADSTRING, (LPTSTR)go_title);
+    lstrcpy(title, (LPTSTR)go_title);
 
     MENUITEMINFOW menu_item_info;
     memset(&menu_item_info, 0, sizeof(MENUITEMINFO));
@@ -103,8 +100,8 @@ void init(const char *go_title)
     szTitle = (LPTSTR)calloc(MAX_LOADSTRING, sizeof(TCHAR));
     szWindowClass = (LPTSTR)calloc(MAX_LOADSTRING, sizeof(TCHAR));
 
-    StringCchCopy(szTitle, MAX_LOADSTRING, (LPCTSTR)go_title);
-    StringCchCopy(szWindowClass, MAX_LOADSTRING, L"MyClass");
+    lstrcpy(szTitle, (LPTSTR)go_title);
+    lstrcpy(szWindowClass, L"MyClass");
     MyRegisterClass(hInstance);
 
     hWnd = InitInstance(hInstance, FALSE); // Don't show window
@@ -116,7 +113,7 @@ void init(const char *go_title)
     NOTIFYICONDATA nid;
     memset(&nid, 0, sizeof(NOTIFYICONDATA));
     nid.cbSize = sizeof(NOTIFYICONDATA);
-    StringCchCopy(nid.szTip, 64, szTitle);
+    lstrcpy(nid.szTip, szTitle);
     nid.uID = TRAYHOST_ICON_ID;
     nid.hWnd = hWnd;
     nid.uCallbackMessage = WM_MYMESSAGE; 

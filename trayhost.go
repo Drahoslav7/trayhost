@@ -70,7 +70,7 @@ func Initialize(title string, imageData []byte, items MenuItems, tmpDirectory st
 		return
 	}
 	initialize(title)
-	err = SetIcon(ICON_PRIMARY)
+	err = SetIcon(ICON_PRIMARY, true)
 	if err != nil {
 		return
 	}
@@ -98,9 +98,9 @@ func Exit() {
 	cleanup()
 }
 
-func SetIcon(iconId int) (err error) {
+func SetIcon(iconId int, force bool) (err error) {
 
-	if iconId != curIconId {
+	if force || iconId != curIconId {
 		iconPth, ok := icons[iconId]
 		if !ok {
 			err = fmt.Errorf("No icon with icon id %d", iconId)

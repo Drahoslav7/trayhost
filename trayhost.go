@@ -95,7 +95,7 @@ func EnterLoop() {
 
 func Exit() {
 	C.exit_loop()
-	cleanup()
+	Cleanup()
 }
 
 func SetIcon(iconId int, force bool) (err error) {
@@ -155,7 +155,7 @@ func createTempFile(iconData []byte) (filename string, err error) {
 	return
 }
 
-func cleanup() {
+func Cleanup() {
 	for _, file := range tmpFiles {
 		err := os.Remove(file)
 		if err != nil {
